@@ -25,6 +25,8 @@
         <lombok.version>1.16.20</lombok.version>
         <hutool.version>4.0.12</hutool.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <sqlite.version>3.15.1</sqlite.version>
+        <anima.version>0.2.1</anima.version>
     </properties>
 
     <dependencies>
@@ -48,6 +50,18 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+        <!-- 数据库操作 -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>${sqlite.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.biezhi</groupId>
+            <artifactId>anima</artifactId>
+            <version>${anima.version}</version>
         </dependency>
     </dependencies>
 

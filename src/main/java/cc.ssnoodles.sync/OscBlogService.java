@@ -25,12 +25,14 @@ public class OscBlogService {
     private static final String LOGIN_URL = "https://www.oschina.net/action/user/hash_login?from=";
     private static final String SAVE_URL = "https://my.oschina.net/action/blog/save";
     private static final String EDIT_URL = "https://my.oschina.net/action/blog/edit";
+    private static ThreadLocal<String> accountThreadLocal = AccountManage.getAccountThreadLocal();
     /**
      * 登陆
      */
-    public String login() {
+    public boolean login() {
         String email = PROPS.getStr("osc.email");
         String pwd = PROPS.getStr("osc.pwd");
+        String userCode = PROPS.getStr("osc.user_code");
 
         HashMap<String, Object> paramMap = new HashMap<>(2);
         paramMap.put("email", email);
@@ -41,36 +43,41 @@ public class OscBlogService {
         List<HttpCookie> httpCookies = response.getCookie();
         if (HttpStatus.HTTP_OK == response.getStatus() && CollUtil.isNotEmpty(httpCookies)){
             String cookie = httpCookies.get(0).toString();
+            accountThreadLocal.set(cookie);
             LOG.debug("login success, cookie : {}", cookie);
-            return cookie;
+            return true;
         }
         LOG.error("login failed ! this email : {}", email);
-        return null;
+        return false;
     }
 
     /**
-     * 保存博客
+     * 保存博文
      * @param cookie
      * @param content
      * @return
      */
-    public int saveBlog(String cookie, Content content) {
-        return HttpRequest.post(SAVE_URL)
+    public boolean saveBlog(String cookie, Content content) {
+        content.setUser_code(PROPS.getStr("osc.user_code"));
+        int status = HttpRequest.post(SAVE_URL)
                 .header(Header.COOKIE, cookie)
                 .form(BeanUtil.beanToMap(content))
                 .execute().getStatus();
+        return HttpStatus.HTTP_OK == status;
     }
 
     /**
-     * 修改博客
+     * 编辑博文
      * @param cookie
      * @param content
      * @return
      */
-    public int editBlog(String cookie, Content content) {
-        return HttpRequest.post(EDIT_URL)
+    public boolean editBlog(String cookie, Content content) {
+        content.setUser_code(PROPS.getStr("osc.user_code"));
+        int status = HttpRequest.post(EDIT_URL)
                 .header(Header.COOKIE, cookie)
                 .form(BeanUtil.beanToMap(content))
                 .execute().getStatus();
+        return HttpStatus.HTTP_OK == status;
     }
 }

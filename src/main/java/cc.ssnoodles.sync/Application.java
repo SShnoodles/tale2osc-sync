@@ -15,6 +15,12 @@ public class Application {
     public static void main(String[] args) {
         log.info("start sync ......");
         OscBlogService oscBlogService = Singleton.get(OscBlogService.class);
-        oscBlogService.login();
+        boolean login = oscBlogService.login();
+        if (login) {
+            TaleBlogService taleBlogService = Singleton.get(TaleBlogService.class);
+            Contents contents = taleBlogService.getLast();
+            //TODO
+        }
+
     }
 }
