@@ -4,6 +4,7 @@ import cc.ssnoodles.sync.entity.Content;
 import cc.ssnoodles.sync.util.AccountManage;
 import cc.ssnoodles.sync.util.Properties;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
@@ -13,7 +14,9 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import cn.hutool.setting.dialect.Props;
 
+import java.net.HttpCookie;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author ssnoodles
@@ -39,18 +42,18 @@ public class OscBlogService {
         HashMap<String, Object> paramMap = new HashMap<>(2);
         paramMap.put("email", email);
         paramMap.put("pwd", pwd);
-//        HttpResponse response = HttpRequest.post(LOGIN_URL)
-//                .form(paramMap)
-//                .execute();
-//        List<HttpCookie> httpCookies = response.getCookie();
-//        if (HttpStatus.HTTP_OK == response.getStatus()
-//                && CollUtil.isNotEmpty(httpCookies)
-//                && httpCookies.get(0).getName().equals(OSCID)){
-//            String cookie = httpCookies.get(0).toString();
-//            accountThreadLocal.set(cookie);
-//            LOG.debug("login success, cookie : {}", cookie);
-//            return true;
-//        }
+        HttpResponse response = HttpRequest.post(LOGIN_URL)
+                .form(paramMap)
+                .execute();
+        List<HttpCookie> httpCookies = response.getCookie();
+        if (HttpStatus.HTTP_OK == response.getStatus()
+                && CollUtil.isNotEmpty(httpCookies)
+                && httpCookies.get(0).getName().equals(OSCID)){
+            String cookie = httpCookies.get(0).toString();
+            accountThreadLocal.set(cookie);
+            LOG.debug("login success, cookie : {}", cookie);
+            return true;
+        }
         LOG.debug("login failed ! this email : {}", email);
         return false;
     }
