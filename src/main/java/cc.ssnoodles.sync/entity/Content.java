@@ -1,4 +1,4 @@
-package cc.ssnoodles.sync;
+package cc.ssnoodles.sync.entity;
 
 import lombok.Getter;
 import lombok.Setter;

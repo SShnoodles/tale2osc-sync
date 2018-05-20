@@ -1,5 +1,8 @@
-package cc.ssnoodles.sync;
+package cc.ssnoodles.sync.service;
 
+import cc.ssnoodles.sync.entity.Contents;
+import cc.ssnoodles.sync.entity.ContentsRecord;
+import cc.ssnoodles.sync.util.Properties;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
@@ -17,12 +20,13 @@ import static io.github.biezhi.anima.Anima.select;
  * Create at 2018/5/17 21:56
  */
 public class TaleBlogService {
-    private static final Props PROPS = new Props("app.properties");
+    private static Props PROPS = Properties.PROPS;
     private static final Log LOG = LogFactory.get();
 
     static {
         // SQLite
-        Anima.open("jdbc:sqlite:" + PROPS.getStr("db.address"));
+        Anima.open("jdbc:sqlite:" + PROPS.getStr(Properties.DB_PATH));
+        LOG.info("sqlite jdbc connection ...");
     }
 
     /**
@@ -39,5 +43,13 @@ public class TaleBlogService {
     public Contents getLast() {
         List<Contents> contents = select().from(Contents.class).order(Contents::getCreated, OrderBy.DESC).limit(1);
         return CollectionUtil.isNotEmpty(contents) ? contents.get(0) : null;
+    }
+
+    /**
+     * 查询文章记录
+     */
+    public ContentsRecord getByTaleContentId(Integer taleContentId) {
+        return select().from(ContentsRecord.class).where(ContentsRecord::getTaleContentId).eq(taleContentId)
+                .and(ContentsRecord::getSyncStatus).eq(1).one();
     }
 }

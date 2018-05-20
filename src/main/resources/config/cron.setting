@@ -1,0 +1,3 @@
+# 同步任务 默认30分钟
+[cc.ssnoodles.sync]
+SyncTask.run = 0 30 * * * ?

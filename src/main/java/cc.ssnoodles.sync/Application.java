@@ -1,8 +1,9 @@
 package cc.ssnoodles.sync;
 
-import cn.hutool.core.lang.Singleton;
+import cn.hutool.cron.CronUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+
 
 /**
  * @author ssnoodles
@@ -13,14 +14,8 @@ public class Application {
     private static final Log log = LogFactory.get();
 
     public static void main(String[] args) {
-        log.info("start sync ......");
-        OscBlogService oscBlogService = Singleton.get(OscBlogService.class);
-        boolean login = oscBlogService.login();
-        if (login) {
-            TaleBlogService taleBlogService = Singleton.get(TaleBlogService.class);
-            Contents contents = taleBlogService.getLast();
-            //TODO
-        }
-
+        log.info("Startup sync ......");
+        CronUtil.start();
+        ConfigMonitor.start();
     }
 }

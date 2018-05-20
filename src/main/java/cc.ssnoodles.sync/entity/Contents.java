@@ -1,4 +1,4 @@
-package cc.ssnoodles.sync;
+package cc.ssnoodles.sync.entity;
 
 import io.github.biezhi.anima.Model;
 import io.github.biezhi.anima.annotation.Table;
