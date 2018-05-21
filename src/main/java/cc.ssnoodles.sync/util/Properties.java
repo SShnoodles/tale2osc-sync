@@ -14,5 +14,7 @@ public class Properties {
     public static final String OSC_USER_CODE = "osc.user_code";
     public static final String DB_PATH = "db.path";
     public static final String OSC_LOGIN_TIMES = "osc.logintimes";
-    public static final String OSC_LOGIN_TIMES_INTERVAL = "osc.logintimes_interval";
+    public static final String OSC_LOGIN_TIMES_INTERVAL = "osc.logintimes.interval";
+    public static final String OSC_CONTENT_CATALOG = "osc.content.catalog";
+    public static final String OSC_CONTENT_CLASSIFICATION = "osc.content.classification";
 }

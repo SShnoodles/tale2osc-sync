@@ -25,9 +25,9 @@ public class Content {
      */
     private String user_code;
     /**
-     * 目录 分类 JAVA 3711389 SCALA 5694873
+     * 目录 分类
      */
-    private int catalog = 3711389;
+    private int catalog;
     /**
      * 标题
      */
@@ -41,9 +41,9 @@ public class Content {
      */
     private String tags;
     /**
-     * 系统分类 428609 编程语言
+     * 系统分类
      */
-    private String classification = "428609";
+    private int classification;
     /**
      * 未知
      */

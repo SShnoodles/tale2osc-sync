@@ -64,7 +64,9 @@ public class SyncTask implements Runnable{
         }
         if (login) {
             Content content = new Content();
-            content.setUser_code(props.getStr("osc.user_code"));
+            content.setCatalog(props.getInt(Properties.OSC_CONTENT_CATALOG));
+            content.setClassification(props.getInt(Properties.OSC_CONTENT_CLASSIFICATION));
+            content.setUser_code(props.getStr(Properties.OSC_USER_CODE));
             content.setTitle(newContents.getTitle());
             content.setTags(newContents.getTags());
             content.setContent(newContents.getContent());
